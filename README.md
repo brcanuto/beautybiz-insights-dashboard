@@ -1,75 +1,90 @@
-# React + TypeScript + Vite
+# BeautyBiz Insights Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An AI-inspired analytics dashboard for beauty and wellness businesses.  
+It pulls data from the [Fake Store API](https://fakestoreapi.com/) and
+treats products and orders as **services** and **appointments** to simulate
+a GlossGenius-style business analytics experience.
 
-Currently, two official plugins are available:
+The dashboard showcases:
+- API integration & data transformation
+- Business-focused KPIs
+- Trend and category visualizations
+- Loading & error states
+- A small “AI-style” insights panel
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Demo
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- **Live URL:** (add Netlify link here)
+- **Tech Stack:** React, TypeScript, Vite, Tailwind CSS, Recharts, Axios
 
-Note: This will impact Vite dev & build performances.
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 📊 **Key Metrics (KPIs)**  
+  - Total revenue  
+  - Total appointments  
+  - Average order value  
+  - Top-performing service category
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- 📈 **Revenue Trend Chart**  
+  - Line chart showing revenue over time  
+  - Responsive and mobile-friendly
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- 🧩 **Category Breakdown**  
+  - Revenue grouped by service category
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- 🎛️ **Filters**  
+  - Date range selector (e.g. last 7 days, last 30 days, all time)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- 🧱 **Robust UI States**  
+  - Skeleton loading components  
+  - Error state with retry CTA
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- 🤖 **“AI-style” Insights Panel**  
+  - A “Generate Insights” button that simulates AI analysis  
+  - Simple rule-based insights such as:
+    - Revenue growth vs previous period  
+    - Top-performing category  
+    - Suggestions based on booking volume & order value
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## How It Works
+
+The app integrates with the public [Fake Store API](https://fakestoreapi.com/):
+
+- `/products` are treated as **services** (e.g. hair, nails, skin).
+- `/carts` are treated as **appointments / orders**.
+- The dashboard:
+  - Joins carts with products to compute revenue.
+  - Aggregates metrics by date and category.
+  - Transforms this into chart-friendly data structures.
+
+---
+
+## Tech Stack
+
+- **Frontend:** React (Vite) + TypeScript
+- **Styling:** Tailwind CSS
+- **Charts:** Recharts
+- **HTTP:** Axios
+- **Build Tooling:** Vite
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (LTS recommended)
+- npm or yarn
+
+### Installation
+
+```bash
+git clone https://github.com/<your-username>/beautybiz-insights-dashboard.git
+cd beautybiz-insights-dashboard
+npm install
