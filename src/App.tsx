@@ -1,5 +1,5 @@
-import DashboardPage from "./pages/DashboardPage";
-import AppLayout from "./components/layout/AppLayout";
+import DashboardPage from "./pages/DashboardPage"
+import AppLayout from "./components/layout/AppLayout"
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         </AppLayout>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -5,6 +5,7 @@ import type {
     RevenuePoint,
     CategoryBreakdown,
 } from "../types/analytics"
+import { normalizeProduct } from "../lib/normalize"
 
 type useAnalyticsDataResult = {
     data: AnalyticsData | null
@@ -67,7 +68,8 @@ export function useAnalyticsData(dateRange: DateRange): useAnalyticsDataResult {
                     throw new Error("Network response was not ok")
                 }
 
-                const products: FakeStoreProduct[] = await productsRes.json()
+                const rawProducts: FakeStoreProduct[] = await productsRes.json();
+                const products = rawProducts.map((p) => normalizeProduct(p));
                 const carts: FakeStoreCart[] = await cartsRes.json()
 
                 if (cancelled) return
@@ -169,7 +171,7 @@ function transformToAnalytics(
         categoryRevenueMap.entries()
     )
     .map(([category, revenue]) => ({ category, revenue }))
-    .sort((a, b) => b.revenue - a.revenue);
+    .sort((a, b) => b.revenue - a.revenue)
 
     return {
         kpis: {

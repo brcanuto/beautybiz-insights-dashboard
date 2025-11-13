@@ -1,8 +1,8 @@
 type ErrorStateProps = {
-  title?: string;
-  message?: string | null;
-  onRetry?: () => void;
-};
+  title?: string
+  message?: string | null
+  onRetry?: () => void
+}
 
 export default function ErrorState({
   title = "Something went wrong",
@@ -28,5 +28,5 @@ export default function ErrorState({
         </button>
       )}
     </div>
-  );
+  )
 }

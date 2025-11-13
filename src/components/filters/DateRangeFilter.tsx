@@ -1,19 +1,19 @@
-import type { ChangeEvent } from "react";
-import type { DateRange } from "../../types/analytics";
+import type { ChangeEvent } from "react"
+import type { DateRange } from "../../types/analytics"
 
 type DateRangeFilterProps = {
-  dateRange: DateRange;
-  onChange: (range: DateRange) => void;
-};
+  dateRange: DateRange
+  onChange: (range: DateRange) => void
+}
 
 function formatInputDate(date: Date): string {
-  return date.toISOString().slice(0, 10); // YYYY-MM-DD
+  return date.toISOString().slice(0, 10) // YYYY-MM-DD
 }
 
 function parseInputDate(value: string): Date | null {
-  if (!value) return null;
-  const d = new Date(value);
-  return Number.isNaN(d.getTime()) ? null : d;
+  if (!value) return null
+  const d = new Date(value)
+  return Number.isNaN(d.getTime()) ? null : d
 }
 
 export default function DateRangeFilter({
@@ -21,31 +21,31 @@ export default function DateRangeFilter({
   onChange,
 }: DateRangeFilterProps) {
   const handleFromChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newFrom = parseInputDate(e.target.value);
-    if (!newFrom) return;
+    const newFrom = parseInputDate(e.target.value)
+    if (!newFrom) return
 
-    let { to } = dateRange;
+    let { to } = dateRange
     if (newFrom > to) {
-      to = newFrom;
+      to = newFrom
     }
 
-    onChange({ from: newFrom, to });
-  };
+    onChange({ from: newFrom, to })
+  }
 
   const handleToChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newTo = parseInputDate(e.target.value);
-    if (!newTo) return;
+    const newTo = parseInputDate(e.target.value)
+    if (!newTo) return
 
-    let { from } = dateRange;
+    let { from } = dateRange
     if (newTo < from) {
-      from = newTo;
+      from = newTo
     }
 
-    onChange({ from, to: newTo });
-  };
+    onChange({ from, to: newTo })
+  }
 
-  const fromValue = formatInputDate(dateRange.from);
-  const toValue = formatInputDate(dateRange.to);
+  const fromValue = formatInputDate(dateRange.from)
+  const toValue = formatInputDate(dateRange.to)
 
 const inputClasses =
   "bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-slate-50 text-xs sm:text-sm " +
@@ -74,5 +74,5 @@ const inputClasses =
         />
       </div>
     </div>
-  );
+  )
 }

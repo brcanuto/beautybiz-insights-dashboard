@@ -6,19 +6,19 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-} from "recharts";
-import type { RevenuePoint } from "../../types/analytics";
+} from "recharts"
+import type { RevenuePoint } from "../../types/analytics"
 
 type RevenueChartProps = {
-  series: RevenuePoint[];
-};
+  series: RevenuePoint[]
+}
 
 function formatCurrency(value: number) {
-  return `$${value.toFixed(2)}`;
+  return `$${value.toFixed(2)}`
 }
 
 export default function RevenueChart({ series }: RevenueChartProps) {
-  const hasData = series && series.length > 0;
+  const hasData = series && series.length > 0
 
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 h-full flex flex-col">
@@ -53,10 +53,9 @@ export default function RevenueChart({ series }: RevenueChartProps) {
               />
               <Tooltip
                 formatter={(value: number | string | (number | string)[]) => {
-                    // Recharts allows arrays, but our data is just a single value.
-                    const v = Array.isArray(value) ? value[0] : value;
+                    const v = Array.isArray(value) ? value[0] : value
 
-                    return typeof v === "number" ? `$${v.toFixed(2)}` : v;
+                    return typeof v === "number" ? `$${v.toFixed(2)}` : v
                 }}
                 labelClassName="text-xs"
                 contentStyle={{
@@ -79,5 +78,5 @@ export default function RevenueChart({ series }: RevenueChartProps) {
         </div>
       )}
     </div>
-  );
+  )
 }

@@ -1,31 +1,31 @@
-import { useState } from "react";
-import type { AnalyticsData } from "../../types/analytics";
+import { useState } from "react"
+import type { AnalyticsData } from "../../types/analytics"
 
 type InsightsPanelProps = {
-  data: AnalyticsData;
-};
+  data: AnalyticsData
+}
 
 type Insight = {
-  id: string;
-  title: string;
-  body: string;
-  tone: "positive" | "neutral" | "warning";
-};
+  id: string
+  title: string
+  body: string
+  tone: "positive" | "neutral" | "warning"
+}
 
 export default function InsightsPanel({ data }: InsightsPanelProps) {
-  const [insights, setInsights] = useState<Insight[] | null>(null);
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [insights, setInsights] = useState<Insight[] | null>(null)
+  const [isGenerating, setIsGenerating] = useState(false)
 
   const handleGenerate = () => {
-    setIsGenerating(true);
+    setIsGenerating(true)
 
     // Simulate an "AI thinking" delay
     setTimeout(() => {
-      const newInsights = computeInsights(data);
-      setInsights(newInsights);
-      setIsGenerating(false);
-    }, 500);
-  };
+      const newInsights = computeInsights(data)
+      setInsights(newInsights)
+      setIsGenerating(false)
+    }, 500)
+  }
 
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 h-full flex flex-col">
@@ -95,12 +95,12 @@ export default function InsightsPanel({ data }: InsightsPanelProps) {
 
         {!isGenerating && (!insights || insights.length === 0) && (
           <p className="text-xs text-slate-500">
-            Click &quot;Generate Insights&quot; to summarize recent performance.
+            Click &quotGenerate Insights&quot to summarize recent performance.
           </p>
         )}
       </div>
     </div>
-  );
+  )
 }
 
 /**
@@ -111,21 +111,21 @@ export default function InsightsPanel({ data }: InsightsPanelProps) {
  * - kpis (avg order value, volume)
  */
 function computeInsights(data: AnalyticsData): Insight[] {
-  const insights: Insight[] = [];
+  const insights: Insight[] = []
 
-  const { kpis, series, byCategory } = data;
-  const { totalRevenue, totalAppointments, avgOrderValue } = kpis;
+  const { kpis, series, byCategory } = data
+  const { totalRevenue, totalAppointments, avgOrderValue } = kpis
 
   // 1) Trend insight: compare first and last data point
   if (series.length >= 2) {
-    const first = series[0];
-    const last = series[series.length - 1];
-    const diff = last.revenue - first.revenue;
+    const first = series[0]
+    const last = series[series.length - 1]
+    const diff = last.revenue - first.revenue
     const pct =
-      first.revenue > 0 ? (diff / first.revenue) * 100 : diff > 0 ? 100 : 0;
+      first.revenue > 0 ? (diff / first.revenue) * 100 : diff > 0 ? 100 : 0
 
     if (Math.abs(pct) >= 5) {
-      const up = pct > 0;
+      const up = pct > 0
       insights.push({
         id: "trend",
         title: up ? "Revenue trending up" : "Revenue trending down",
@@ -137,15 +137,15 @@ function computeInsights(data: AnalyticsData): Insight[] {
           : `Revenue is down about ${Math.abs(
               pct
             ).toFixed()}% versus the start of this period. It may be worth reviewing pricing, promotions, or client retention strategies.`,
-      });
+      })
     }
   }
 
   // 2) Top category insight
   if (byCategory.length > 0) {
-    const top = byCategory[0];
+    const top = byCategory[0]
     const share =
-      totalRevenue > 0 ? (top.revenue / totalRevenue) * 100 : undefined;
+      totalRevenue > 0 ? (top.revenue / totalRevenue) * 100 : undefined
 
     insights.push({
       id: "top-category",
@@ -157,15 +157,15 @@ function computeInsights(data: AnalyticsData): Insight[] {
               0
             )}% of total revenue. Highlight this category in your marketing or upsell it during appointments.`
           : `${top.category} is currently your best-performing category. You could feature it more prominently in your booking flow or promotions.`,
-    });
+    })
   }
 
   // 3) Volume vs value insight
   if (totalAppointments > 0 && totalRevenue > 0) {
-    const highAov = avgOrderValue >= 150;
-    const lowAov = avgOrderValue <= 40;
-    const lowVolume = totalAppointments < 10;
-    const highVolume = totalAppointments >= 40;
+    const highAov = avgOrderValue >= 150
+    const lowAov = avgOrderValue <= 40
+    const lowVolume = totalAppointments < 10
+    const highVolume = totalAppointments >= 40
 
     if (highAov && lowVolume) {
       insights.push({
@@ -174,7 +174,7 @@ function computeInsights(data: AnalyticsData): Insight[] {
         tone: "neutral",
         body:
           "Your average order value is high, but you’re seeing relatively few appointments. Consider strategies to increase booking volume, like off-peak discounts or referral incentives.",
-      });
+      })
     } else if (lowAov && highVolume) {
       insights.push({
         id: "low-value-high-volume",
@@ -182,7 +182,7 @@ function computeInsights(data: AnalyticsData): Insight[] {
         tone: "positive",
         body:
           "You have strong booking volume, but a relatively low average order value. You might experiment with add-ons, bundles, or premium services to gently raise revenue per appointment.",
-      });
+      })
     }
   }
 
@@ -194,8 +194,8 @@ function computeInsights(data: AnalyticsData): Insight[] {
       tone: "neutral",
       body:
         "Performance looks relatively stable for this period. Try adjusting the date range to spot short-term spikes or dips, or segment by category to see where the biggest opportunities are.",
-    });
+    })
   }
 
-  return insights;
+  return insights
 }

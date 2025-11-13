@@ -5,19 +5,19 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-} from "recharts";
-import type { CategoryBreakdown as CategoryBreakdownType } from "../../types/analytics";
+} from "recharts"
+import type { CategoryBreakdown as CategoryBreakdownType } from "../../types/analytics"
 
 type CategoryBreakdownProps = {
-  data: CategoryBreakdownType[];
-};
+  data: CategoryBreakdownType[]
+}
 
 function formatCurrency(value: number) {
-  return `$${value.toFixed(0)}`;
+  return `$${value.toFixed(0)}`
 }
 
 export default function CategoryBreakdown({ data }: CategoryBreakdownProps) {
-  const hasData = data && data.length > 0;
+  const hasData = data && data.length > 0
 
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 h-full flex flex-col">
@@ -54,9 +54,9 @@ export default function CategoryBreakdown({ data }: CategoryBreakdownProps) {
                   fill: "rgba(79, 70, 229, 0.15)", 
                   radius: 6 }}
                 formatter={(value: number | string | (number | string)[]) => {
-                    const v = Array.isArray(value) ? value[0] : value;
+                    const v = Array.isArray(value) ? value[0] : value
 
-                    return typeof v === "number" ? `$${v.toFixed(0)}` : v;
+                    return typeof v === "number" ? `$${v.toFixed(0)}` : v
                 }}
                 labelClassName="text-xs"
                 contentStyle={{
@@ -76,5 +76,5 @@ export default function CategoryBreakdown({ data }: CategoryBreakdownProps) {
         </div>
       )}
     </div>
-  );
+  )
 }

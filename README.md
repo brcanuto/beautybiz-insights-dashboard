@@ -2,14 +2,14 @@
 
 An AI-inspired analytics dashboard for beauty and wellness businesses.  
 It pulls data from the [Fake Store API](https://fakestoreapi.com/) and
-treats products and orders as **services** and **appointments** to simulate
-a GlossGenius-style business analytics experience.
+treats products and carts as **services** and **appointments**.
 
 The dashboard showcases:
-- API integration & data transformation
+
+- API integration and data transformation
 - Business-focused KPIs
 - Trend and category visualizations
-- Loading & error states
+- Loading and error states
 - A small “AI-style” insights panel
 
 ---
@@ -17,38 +17,50 @@ The dashboard showcases:
 ## Demo
 
 - **Live URL:** (add Netlify link here)
-- **Tech Stack:** React, TypeScript, Vite, Tailwind CSS, Recharts, Axios
+- **Tech Stack:** React, TypeScript, Vite, Tailwind CSS, Recharts
 
 ---
 
 ## Features
 
-- 📊 **Key Metrics (KPIs)**  
-  - Total revenue  
-  - Total appointments  
-  - Average order value  
-  - Top-performing service category
+### Key metrics (KPIs)
 
-- 📈 **Revenue Trend Chart**  
-  - Line chart showing revenue over time  
-  - Responsive and mobile-friendly
+- Total revenue  
+- Total appointments  
+- Average order value  
+- Top-performing category  
 
-- 🧩 **Category Breakdown**  
-  - Revenue grouped by service category
+### Revenue trend chart
 
-- 🎛️ **Filters**  
-  - Date range selector (e.g. last 7 days, last 30 days, all time)
+- Line chart of total revenue per day  
+- Responsive layout  
+- Dark-theme styling and tooltips  
 
-- 🧱 **Robust UI States**  
-  - Skeleton loading components  
-  - Error state with retry CTA
+### Category breakdown
 
-- 🤖 **“AI-style” Insights Panel**  
-  - A “Generate Insights” button that simulates AI analysis  
-  - Simple rule-based insights such as:
-    - Revenue growth vs previous period  
-    - Top-performing category  
-    - Suggestions based on booking volume & order value
+- Bar chart of revenue by category  
+- Hover highlight with tooltip  
+- Category names normalized for display (e.g. `"men's clothing"` → `Men's Clothing`)
+
+### Date range filter
+
+- Custom date range picker using native `<input type="date">`
+- Prevents invalid ranges (from > to)
+- Uses a default range that matches the Fake Store API’s historical data
+
+### Robust UI states
+
+- Skeleton loading components for KPIs
+- Error state with a Retry button
+- Graceful empty states when there isn’t enough data to chart
+
+### “AI-style” insights panel
+
+- “Generate Insights” button simulates an AI analysis step
+- Rule-based insights such as:
+  - Revenue trending up or down over the selected period
+  - Top-performing category summary
+  - Suggestions based on booking volume vs average order value
 
 ---
 
@@ -56,35 +68,30 @@ The dashboard showcases:
 
 The app integrates with the public [Fake Store API](https://fakestoreapi.com/):
 
-- `/products` are treated as **services** (e.g. hair, nails, skin).
-- `/carts` are treated as **appointments / orders**.
-- The dashboard:
-  - Joins carts with products to compute revenue.
-  - Aggregates metrics by date and category.
-  - Transforms this into chart-friendly data structures.
+- `GET /products` are treated as **services** with `price`, `title`, and `category`
+- `GET /carts` are treated as **appointments / orders** with `date` and `products[]`
 
----
+Analytics logic:
 
-## Tech Stack
+1. Fetches products and carts in parallel.
+2. Normalizes incoming data (categories, titles, descriptions).
+3. Joins carts with products to compute revenue per order.
+4. Filters orders to the selected date range.
+5. Aggregates into:
 
-- **Frontend:** React (Vite) + TypeScript
-- **Styling:** Tailwind CSS
-- **Charts:** Recharts
-- **HTTP:** Axios
-- **Build Tooling:** Vite
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (LTS recommended)
-- npm or yarn
-
-### Installation
-
-```bash
-git clone https://github.com/<your-username>/beautybiz-insights-dashboard.git
-cd beautybiz-insights-dashboard
-npm install
+   ```ts
+   type AnalyticsData = {
+     kpis: {
+       totalRevenue: number;
+       totalAppointments: number;
+       avgOrderValue: number;
+     };
+     series: {
+       date: string;    // YYYY-MM-DD
+       revenue: number;
+     }[];
+     byCategory: {
+       category: string;
+       revenue: number;
+     }[];
+   };
