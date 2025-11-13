@@ -30,9 +30,6 @@ export default function DashboardPage() {
           <h2 className="text-2xl font-bold tracking-tight">Business Performance</h2>
           <DateRangeFilter dateRange={dateRange} onChange={setDateRange} />
         </div>
-
-
-
         <p className="text-slate-400 text-sm">Loading analytics…</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -56,11 +53,6 @@ export default function DashboardPage() {
           <h2 className="text-2xl font-bold tracking-tight">Business Performance</h2>
           <DateRangeFilter dateRange={dateRange} onChange={setDateRange} />
         </div>
-          <p className="text-xs text-slate-500 mt-1">
-            This dashboard uses the <a className="text-indigo-400 underline" href="https://fakestoreapi.com/docs" target="_blank" rel="noreferrer">Fake Store API</a>.
-            Their historical order data is mostly from early–mid&nbsp2020. 
-            Some date ranges may not display results because the API does not contain newer data.
-          </p>
         <ErrorState message={error} onRetry={refetch} />
       </div>
     )
@@ -76,11 +68,6 @@ export default function DashboardPage() {
         <h2 className="text-2xl font-bold tracking-tight">Business Performance</h2>
         <DateRangeFilter dateRange={dateRange} onChange={setDateRange} />
       </div>
-          <p className="text-xs text-slate-500 mt-1">
-            This dashboard uses the <a className="text-indigo-400 underline" href="https://fakestoreapi.com/docs" target="_blank" rel="noreferrer">Fake Store API</a>.
-            Their historical order data is mostly from early–mid&nbsp2020. 
-            Some date ranges may not display results because the API does not contain newer data.
-          </p>
       {/* KPI cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Total Revenue" value={kpis.totalRevenue} variant="currency" />
