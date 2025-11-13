@@ -16,7 +16,7 @@ The dashboard showcases:
 
 ## Demo
 
-- **Live URL:** (add Netlify link here)
+- **Live URL:** https://beautybiz.netlify.app/
 - **Tech Stack:** React, TypeScript, Vite, Tailwind CSS, Recharts
 
 ---
